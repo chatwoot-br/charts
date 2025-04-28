@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 # Overrides the image tag whose default is the chart appVersion.
 image:
-  repository: chatwoot/chatwoot
+  repository: ghcr.io/chatwoot-br/chatwoot
   tag: v4.1.0
   pullPolicy: IfNotPresent
 
@@ -57,7 +57,7 @@ services:
   name: chatwoot
   internalPort: 3000
   targetPort: 3000
-  type: LoadBalancer
+  type: ClusterIP
   annotations: {}
     # For example
     #  service.beta.kubernetes.io/aws-load-balancer-type: external
@@ -124,7 +124,7 @@ tolerations: []
 affinity: {}
 
 postgresql:
-  enabled: true
+  enabled: false
   nameOverride: chatwoot-postgresql
   image:
     registry: ghcr.io
@@ -144,7 +144,7 @@ postgresql:
   # postgresqlPort: 5432
 
 redis:
-  enabled: true
+  enabled: false
   nameOverride: chatwoot-redis
   auth:
     password: redis

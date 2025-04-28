@@ -2,12 +2,12 @@
 
 [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/artifact-hub)](https://artifacthub.io/packages/helm/chatwoot/chatwoot)
 
-This repository contains helm charts for [Chatwoot](https://github.com/chatwoot/chatwoot).
+This repository contains helm charts for [Chatwoot](https://github.com/chatwoot-br/chatwoot).
 
 ## Installation
 
 ```bash
-helm repo add chatwoot https://chatwoot.github.io/charts
+helm repo add chatwoot https://chatwoot-br.github.io/charts
 helm install chatwoot chatwoot/chatwoot
 ```
 

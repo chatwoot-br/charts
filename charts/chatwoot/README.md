@@ -1,11 +1,11 @@
  # Chatwoot
 
-[Chatwoot](https://chatwoot.com) is a customer engagement suite. an open-source alternative to Intercom, Zendesk, Salesforce Service Cloud, etc. 🔥💬
+[Chatwoot](https://chatwoot.app.br) is a customer engagement suite. an open-source alternative to Intercom, Zendesk, Salesforce Service Cloud, etc. 🔥💬
 
 ## TL;DR
 
 ```
-helm repo add chatwoot https://chatwoot.github.io/charts
+helm repo add chatwoot https://chatwoot-br.github.io/charts
 helm install chatwoot chatwoot/chatwoot
 ```
 
@@ -131,7 +131,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `env.AWS_ACCESS_KEY_ID`             | Amazon access key ID                                                 | `""`                                                       |
 | `env.AWS_REGION`                    | Amazon region                                                        | `""`                                                       |
 | `env.AWS_SECRET_ACCESS_KEY`         | Amazon secret key ID                                                 | `""`                                                       |
-| `env.FB_APP_ID`                     | For facebook channel https://www.chatwoot.com/docs/facebook-setup    | `""`                                                       |
+| `env.FB_APP_ID`                     | For facebook channel https://www.chatwoot.app.br/docs/facebook-setup    | `""`                                                       |
 | `env.FB_APP_SECRET`                 | For facebook channel                                                 | `""`                                                       |
 | `env.FB_VERIFY_TOKEN`               | For facebook channel                                                 | `""`                                                       |
 | `env.SLACK_CLIENT_ID`               | For slack integration                                                | `""`                                                       |
