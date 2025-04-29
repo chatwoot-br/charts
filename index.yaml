@@ -40,6 +40,16 @@ entries:
   evolution:
   - apiVersion: v2
     appVersion: v2.2.3
+    created: "2025-04-29T16:48:29.098865671Z"
+    description: A Helm chart for Kubernetes
+    digest: c9edd829179d9499044b5ab679e9a4c52a8042ef1f260f61c710e6c4bcdd1b66
+    name: evolution
+    type: application
+    urls:
+    - https://github.com/chatwoot-br/charts/releases/download/evolution-1.0.1/evolution-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: v2.2.3
     created: "2025-04-29T15:17:05.788656326Z"
     description: A Helm chart for Kubernetes
     digest: a8308fb6bf29db2cd8e6e9e01ae677afb2978fa6ed56303de025423052fdb6c8
@@ -48,4 +58,4 @@ entries:
     urls:
     - https://github.com/chatwoot-br/charts/releases/download/evolution-1.0.0/evolution-1.0.0.tgz
     version: 1.0.0
-generated: "2025-04-29T15:17:05.788662097Z"
+generated: "2025-04-29T16:48:29.098879086Z"
