@@ -67,7 +67,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: {{ .Values.redis.auth.existingSecret }}
-              key: {{ default "password" .Values.redis.auth.existingSecretPasswordKey }}
+              key: {{ default "password" .Values.redis.auth.existingSecretKey }}
         {{- end }}
         envFrom:
           - secretRef:

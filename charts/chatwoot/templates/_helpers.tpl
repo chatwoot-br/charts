@@ -162,7 +162,7 @@ Set redis secretKey
 {{- if .Values.redis.enabled -}}
 "redis-password"
 {{- else -}}
-{{- default "redis-password" .Values.redis.existingSecretPasswordKey | quote -}}
+{{- default "redis-password" .Values.redis.auth.existingSecretKey | quote -}}
 {{- end -}}
 {{- end -}}
 
