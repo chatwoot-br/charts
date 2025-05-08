@@ -40,9 +40,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
             - configMapRef:
-                name: {{ include "evolution.name" . }}-config
+                name: "{{ .Release.Name }}-config"
             - secretRef:
-                name: {{ include "evolution.name" . }}-secrets
+                name: "{{ .Release.Name }}-secrets"
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
