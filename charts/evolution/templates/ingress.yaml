@@ -49,12 +49,13 @@ spec:
             backend:
               {{- if semverCompare ">=1.19-0" $.Capabilities.KubeVersion.GitVersion }}
               service:
-                name: {{ $fullName }}
+                # Use .backend.service.name if defined, otherwise fallback to $fullName
+                name: {{ default $fullName .backend.service.name }}
                 port:
-                  number: {{ $svcPort }}
+                  number: {{ default (int $svcPort) (int .backend.service.port.number) }}
               {{- else }}
-              serviceName: {{ $fullName }}
-              servicePort: {{ $svcPort }}
+              serviceName: {{ default $fullName .backend.service.name }}
+              servicePort: {{ default (int $svcPort) (int .backend.service.port.number) }}
               {{- end }}
           {{- end }}
     {{- end }}
