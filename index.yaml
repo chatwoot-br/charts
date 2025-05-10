@@ -134,4 +134,24 @@ entries:
     urls:
     - https://github.com/chatwoot-br/charts/releases/download/evolution-1.0.0/evolution-1.0.0.tgz
     version: 1.0.0
-generated: "2025-05-08T12:36:07.347842922Z"
+  nocodb:
+  - apiVersion: v2
+    appVersion: 0.100.2
+    created: "2025-05-10T12:31:56.214641921Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~11.6.6
+    - condition: mysql.enabled
+      name: mysql
+      repository: https://charts.bitnami.com/bitnami
+      version: ~9.4.6
+    description: A Helm chart for Kubernetes
+    digest: cbbf183489fb4d044109d40160ea1f43aae67d7c12670775ace3d9114d185d98
+    name: nocodb
+    type: application
+    urls:
+    - https://github.com/chatwoot-br/charts/releases/download/nocodb-0.3.0/nocodb-0.3.0.tgz
+    version: 0.3.0
+generated: "2025-05-10T12:31:56.214703917Z"
