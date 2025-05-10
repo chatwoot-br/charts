@@ -31,8 +31,8 @@ docker push ghcr.io/chatwoot-br/postgres:17
 # Create multiple tags for the same image
 # This allows referencing the image by specific version or general major version
 docker buildx imagetools create \
-  --tag ghcr.io/chatwoot-br/postgres:17.4.0 \
-  --tag ghcr.io/chatwoot-br/postgres:17.4 \
+  --tag ghcr.io/chatwoot-br/postgres:17.5.0 \
+  --tag ghcr.io/chatwoot-br/postgres:17.5 \
   --tag ghcr.io/chatwoot-br/postgres:17 \
   ghcr.io/chatwoot-br/postgres:17
 
@@ -40,11 +40,11 @@ docker buildx imagetools create \
 # - Builds for both AMD64 and ARM64 platforms
 # - Includes pgvector extension for vector similarity search
 # - Includes pgsql-http for making HTTP requests from PostgreSQL
-# - Based on PostgreSQL version 17.4.0
+# - Based on PostgreSQL version 17.5.0
 docker buildx build --platform linux/amd64,linux/arm64 \
   --build-arg PGVECTOR_TAG=v0.8.0 \
   --build-arg PGSQL_HTTP_TAG=v1.6.3 \
-  --build-arg PG_MAJOR=17.4.0 \
+  --build-arg PG_MAJOR=17.5.0 \
   -t ghcr.io/chatwoot-br/postgres:17 \
   -f docker/postgres/Dockerfile \
   --push .
