@@ -69,7 +69,11 @@ ingress:
       paths:
         - path: /
           pathType: ImplementationSpecific
+  # Additional CORS origins to allow beyond the ingress hosts
+  cors: []
   tls: []
+  # - https://external-domain.com
+  # - https://*.example.org
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
