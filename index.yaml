@@ -154,4 +154,15 @@ entries:
     urls:
     - https://github.com/chatwoot-br/charts/releases/download/nocodb-0.3.0/nocodb-0.3.0.tgz
     version: 0.3.0
-generated: "2025-05-10T12:31:56.214703917Z"
+  typebot:
+  - apiVersion: v2
+    appVersion: 3.7.1
+    created: "2025-05-12T13:54:58.95088202Z"
+    description: A Helm chart for Kubernetes
+    digest: 5d80205f6ef0d4dd99253ae74cd028654a6de72a48252036f75761fc9b3ef7d6
+    name: typebot
+    type: application
+    urls:
+    - https://github.com/chatwoot-br/charts/releases/download/typebot-1.0.0/typebot-1.0.0.tgz
+    version: 1.0.0
+generated: "2025-05-12T13:54:58.950901337Z"
