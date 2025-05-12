@@ -157,6 +157,16 @@ entries:
   typebot:
   - apiVersion: v2
     appVersion: 3.7.1
+    created: "2025-05-12T19:21:39.023667805Z"
+    description: A Helm chart for Kubernetes
+    digest: 533aba6ebb2642b97073f9232d6e28d18cc1c549fef3370ed8ca8aecdc91af01
+    name: typebot
+    type: application
+    urls:
+    - https://github.com/chatwoot-br/charts/releases/download/typebot-1.0.1/typebot-1.0.1.tgz
+    version: 1.0.1
+  - apiVersion: v2
+    appVersion: 3.7.1
     created: "2025-05-12T13:54:58.95088202Z"
     description: A Helm chart for Kubernetes
     digest: 5d80205f6ef0d4dd99253ae74cd028654a6de72a48252036f75761fc9b3ef7d6
@@ -165,4 +175,4 @@ entries:
     urls:
     - https://github.com/chatwoot-br/charts/releases/download/typebot-1.0.0/typebot-1.0.0.tgz
     version: 1.0.0
-generated: "2025-05-12T13:54:58.950901337Z"
+generated: "2025-05-12T19:21:39.023692831Z"
