@@ -38,13 +38,13 @@ spec:
       http:
         paths:
           {{- range .paths }}
-          - path: {{ .path }}
-            pathType: {{ .pathType }}
+          - path:  {{ default "/" .path }}
+            pathType: {{ default "ImplementationSpecific" .pathType }}
             backend:
               service:
-                name: {{ .backend.service.name }}
+                name: {{ default $fullName .backend.service.name }}
                 port:
-                  number: {{ int .backend.service.port.number }}
+                  number: {{ default .Values.services.targetPort .backend.service.port.number }}
           {{- end }}
     {{- end }}
   {{- end }}
