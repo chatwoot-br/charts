@@ -182,6 +182,12 @@ config:
   S3_ENDPOINT: "files.site.com"
   S3_USE_SSL: "true"
 
+  # Determine the logs to be displayed
+  LOG_LEVEL: "ERROR,WARN"
+  LOG_COLOR: false
+  # Log Baileys - "fatal" | "error" | "warn" | "info" | "debug" | "trace"
+  LOG_BAILEYS: warn
+
 secret:
   DATABASE_CONNECTION_URI: "postgresql://postgres:P@ssw0rd@postgres:5432/evolution"
   RABBITMQ_URI: "amqp://usuario:P@ssw0rd@rabbitmq:5672/default"

@@ -92,7 +92,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 3000
 
 ingress:
   enabled: false
@@ -182,7 +182,41 @@ hooks:
 existingEnvSecret: ""
 
 env:
-  ACTIVE_STORAGE_SERVICE: local
+  FRONTEND_URL: "http://0.0.0.0:3000"
+  SECRET_KEY_BASE: replace_with_your_super_duper_secret_key_base
+
+  DIRECT_UPLOADS_ENABLED: true
+  ACTIVE_STORAGE_SERVICE: s3_compatible
+  STORAGE_BUCKET_NAME: chatwoot
+  STORAGE_REGION: eu
+  #set force_path_style to true if using minio
+  STORAGE_FORCE_PATH_STYLE: true
+
+  MAILER_SENDER_EMAIL: ""
+  SMTP_ADDRESS: ""
+  SMTP_PASSWORD: ""
+  SMTP_USERNAME: ""
+  SMTP_AUTHENTICATION: plain
+  SMTP_ENABLE_STARTTLS_AUTO: true
+  SMTP_OPENSSL_VERIFY_MODE: none
+  SMTP_PORT: 587
+
+  DEFAULT_LOCALE: pt_BR
+  ENABLE_RACK_ATTACK_WIDGET_API: true
+  FB_APP_ID: ""
+  FB_APP_SECRET: ""
+  FB_VERIFY_TOKEN: ""
+  IG_VERIFY_TOKEN: ""
+
+  # https://www.chatwoot.com/docs/self-hosted/deployment/performance/optimizing-configurations
+  WEB_CONCURRENCY: 0
+  RAILS_MIN_THREADS: 5
+  RAILS_MAX_THREADS: 5
+  SIDEKIQ_CONCURRENCY: 10
+
+  DISABLE_TELEMETRY: true
+
+  # DEFAULTS
   ANDROID_BUNDLE_ID: com.chatwoot.app
   ANDROID_SHA256_CERT_FINGERPRINT: "AC:73:8E:DE:EB:56:EA:CC:10:87:02:A7:65:37:7B:38:D4:5D:D4:53:F8:3B:FB:D3:C6:28:64:1D:AA:08:1E:D8"
   ASSET_CDN_HOST: ""
@@ -190,39 +224,25 @@ env:
   AWS_REGION: ""
   AWS_SECRET_ACCESS_KEY: ""
   ENABLE_ACCOUNT_SIGNUP: false
-  FB_APP_ID: ""
-  FB_APP_SECRET: ""
-  FB_VERIFY_TOKEN: ""
   FORCE_SSL: false
-  FRONTEND_URL: "http://0.0.0.0:3000"
   INSTALLATION_ENV: helm
   IOS_APP_ID: 6C953F3RX2.com.chatwoot.app
-  LOG_LEVEL: info
+  LOG_LEVEL: warn
   LOG_SIZE: 500
   MAILER_INBOUND_EMAIL_DOMAIN: ""
-  MAILER_SENDER_EMAIL: ""
   MAILGUN_INGRESS_SIGNING_KEY: ""
   MANDRILL_INGRESS_API_KEY: ""
   RAILS_ENV: production
   RAILS_INBOUND_EMAIL_PASSWORD: ""
   RAILS_INBOUND_EMAIL_SERVICE: ""
   RAILS_LOG_TO_STDOUT: true
-  RAILS_MAX_THREADS: 5
   REDIS_SENTINEL_MASTER_NAME: ""
   REDIS_SENTINELS: ""
   REDIS_TLS: false
   S3_BUCKET_NAME: ""
-  SECRET_KEY_BASE: replace_with_your_super_duper_secret_key_base
   SENTRY_DSN: ""
   SLACK_CLIENT_ID: ""
   SLACK_CLIENT_SECRET: ""
-  SMTP_ADDRESS: ""
-  SMTP_AUTHENTICATION: plain
-  SMTP_ENABLE_STARTTLS_AUTO: true
-  SMTP_OPENSSL_VERIFY_MODE: none
-  SMTP_PASSWORD: ""
-  SMTP_PORT: 587
-  SMTP_USERNAME: ""
   TWITTER_APP_ID: ""
   TWITTER_CONSUMER_KEY: ""
   TWITTER_CONSUMER_SECRET: ""
