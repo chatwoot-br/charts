@@ -3,6 +3,42 @@ entries:
   chatwoot:
   - apiVersion: v2
     appVersion: v4.1.0
+    created: "2025-05-18T17:40:37.397050236Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 11.6.7
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.12.2
+    description: "Open-source customer engagement suite, an alternative to Intercom,
+      Zendesk, Salesforce Service Cloud etc. \U0001F525\U0001F4AC"
+    digest: 9462422d8b1e5583438f4b36263aa5f8001210b63045dc20d6138d33578acb69
+    home: https://github.com/chatwoot-br/charts
+    icon: https://chatwoot-public-assets.s3.amazonaws.com/logo/square.png
+    keywords:
+    - chatwoot
+    - open source
+    - customer support
+    - chat
+    - ruby
+    - rails
+    - crm
+    maintainers:
+    - email: antonio@chatwoot.app.br
+      name: milesibastos
+    name: chatwoot
+    sources:
+    - https://github.com/chatwoot-br/chatwoot
+    - https://chatwoot.app.br
+    type: application
+    urls:
+    - https://github.com/chatwoot-br/charts/releases/download/chatwoot-2.0.5/chatwoot-2.0.5.tgz
+    version: 2.0.5
+  - apiVersion: v2
+    appVersion: v4.1.0
     created: "2025-05-16T23:41:55.344622053Z"
     dependencies:
     - condition: postgresql.enabled
@@ -184,6 +220,16 @@ entries:
   evolution:
   - apiVersion: v2
     appVersion: v2.2.3
+    created: "2025-05-18T17:40:37.568737185Z"
+    description: A Helm chart for Kubernetes
+    digest: cd9def39090a492e7b8e711830ed6491a83770f20a04a8beca10e8885b78c9c5
+    name: evolution
+    type: application
+    urls:
+    - https://github.com/chatwoot-br/charts/releases/download/evolution-1.0.6/evolution-1.0.6.tgz
+    version: 1.0.6
+  - apiVersion: v2
+    appVersion: v2.2.3
     created: "2025-05-08T12:36:07.347773783Z"
     description: A Helm chart for Kubernetes
     digest: f1d8c6d0f542eec6c09ace3abb96b909484b178ab5110bc194cc17f72ddd537e
@@ -283,4 +329,4 @@ entries:
     urls:
     - https://github.com/chatwoot-br/charts/releases/download/typebot-1.0.0/typebot-1.0.0.tgz
     version: 1.0.0
-generated: "2025-05-16T23:41:55.344673429Z"
+generated: "2025-05-18T17:40:37.568800623Z"
