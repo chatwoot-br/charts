@@ -12,6 +12,12 @@ image:
 autoscaling:
   apiVersion: autoscaling/v2
 
+deploymentStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1        # One pod can be created above desired count
+    maxUnavailable: 1  # One pod can be unavailable during update
+
 web:
   hpa:
      # set this to true to enable horizontal pod autoscaling
