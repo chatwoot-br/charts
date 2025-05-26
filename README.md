@@ -44,8 +44,14 @@ docker buildx imagetools create \
 docker buildx build --platform linux/amd64,linux/arm64 \
   --build-arg PGVECTOR_TAG=v0.8.0 \
   --build-arg PGSQL_HTTP_TAG=v1.6.3 \
-  --build-arg PG_MAJOR=17.5.0 \
-  -t ghcr.io/chatwoot-br/postgres:17 \
+  --build-arg PG_MAJOR=16.6.0 \
+  -t ghcr.io/chatwoot-br/postgres:16 \
   -f docker/postgres/Dockerfile \
   --push .
+
+docker buildx imagetools create \
+  --tag ghcr.io/chatwoot-br/postgres:16.6.0 \
+  --tag ghcr.io/chatwoot-br/postgres:16.6 \
+  --tag ghcr.io/chatwoot-br/postgres:16 \
+  ghcr.io/chatwoot-br/postgres:16
 ```
