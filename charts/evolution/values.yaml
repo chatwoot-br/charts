@@ -35,7 +35,7 @@ config:
   # Configura a Versão do WhatsApp
   # Você pode consultar as versões no link abaixo:
   # https://web.whatsapp.com/check-update?version=0&platform=web
-  # CONFIG_SESSION_PHONE_VERSION: "2.3000.1015901307"
+  CONFIG_SESSION_PHONE_VERSION: "2.3000.1023247615"
   # Informa a quantidade de QRCODE que será gerado
   QRCODE_LIMIT: "3"
   # Informa o idioma da Evolution
@@ -92,7 +92,7 @@ config:
   # Configurações do WhatsApp Business Cloud ##############
   #########################################################
   #########################################################
-  WA_BUSINESS_TOKEN_WEBHOOK: "evolution"
+  WA_BUSINESS_TOKEN_WEBHOOK: "00000000-0000-0000-0000-000000000000"
   WA_BUSINESS_URL: "https://graph.facebook.com"
   WA_BUSINESS_VERSION: "v20.0"
   WA_BUSINESS_LANGUAGE: "pt_BR"
@@ -101,7 +101,7 @@ config:
   # Configurações dos Eventos via Webhook #################
   # Método não Recomendado. Usar fila com RabbitMQ ########
   #########################################################
-  WEBHOOK_GLOBAL_URL: "''"
+  WEBHOOK_GLOBAL_URL: ""
   WEBHOOK_GLOBAL_ENABLED: "false"
   WEBHOOK_GLOBAL_WEBHOOK_BY_EVENTS: "false"
   WEBHOOK_EVENTS_APPLICATION_STARTUP: "false"
