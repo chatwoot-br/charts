@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/chatwoot-br/evolution-api
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: v2.2.3
+  tag: v2.3.0
 
 imagePullSecrets: []
 nameOverride: ""
@@ -35,7 +35,7 @@ config:
   # Configura a Versão do WhatsApp
   # Você pode consultar as versões no link abaixo:
   # https://web.whatsapp.com/check-update?version=0&platform=web
-  CONFIG_SESSION_PHONE_VERSION: "2.3000.1023247615"
+  # CONFIG_SESSION_PHONE_VERSION: "2.3000.1023247615"
   # Informa a quantidade de QRCODE que será gerado
   QRCODE_LIMIT: "3"
   # Informa o idioma da Evolution
@@ -278,3 +278,20 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+# values.yaml
+restartCronJob:
+  enabled: true            # vira false se não quiser instalar
+  schedule: "0 5 * * *"    # 05:00 todo dia
+  timezone: "America/Sao_Paulo"
+  # imagem leve que já traz kubectl
+  image:
+    repository: bitnami/kubectl
+    tag: 1.31             # mantenha alinhado ao seu cluster
+    pullPolicy: IfNotPresent
+  targetKind: Deployment   # ou StatefulSet/DaemonSet/Pod
+  targetName: ""
+  # RBAC
+  serviceAccount:
+    create: true
+    name: ""               # vazio → usa {{ include "evolution.fullname" . }}-restart
