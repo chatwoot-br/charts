@@ -436,6 +436,18 @@ entries:
     urls:
     - https://github.com/chatwoot-br/charts/releases/download/nocodb-0.3.0/nocodb-0.3.0.tgz
     version: 0.3.0
+  pgadmin:
+  - apiVersion: v2
+    appVersion: "9.4"
+    created: "2025-06-05T19:32:45.483521437Z"
+    description: A Helm chart for pgAdmin 4 - PostgreSQL administration and development
+      platform
+    digest: b3d3861a0d8dcfba0cd120a430ffdd41d61a48fdc7d7db3ca3e3a11d1103ae79
+    name: pgadmin
+    type: application
+    urls:
+    - https://github.com/chatwoot-br/charts/releases/download/pgadmin-9.4.0/pgadmin-9.4.0.tgz
+    version: 9.4.0
   typebot:
   - apiVersion: v2
     appVersion: 3.7.1
@@ -457,4 +469,4 @@ entries:
     urls:
     - https://github.com/chatwoot-br/charts/releases/download/typebot-1.0.0/typebot-1.0.0.tgz
     version: 1.0.0
-generated: "2025-05-29T15:37:34.968138451Z"
+generated: "2025-06-05T19:32:45.483562875Z"
