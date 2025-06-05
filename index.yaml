@@ -439,6 +439,17 @@ entries:
   pgadmin:
   - apiVersion: v2
     appVersion: "9.4"
+    created: "2025-06-05T21:40:39.965285727Z"
+    description: A Helm chart for pgAdmin 4 - PostgreSQL administration and development
+      platform
+    digest: 5704747c50c4562e48604658c52ac68fac5906c58d05bd12bf58deb9869f7b20
+    name: pgadmin
+    type: application
+    urls:
+    - https://github.com/chatwoot-br/charts/releases/download/pgadmin-9.4.1/pgadmin-9.4.1.tgz
+    version: 9.4.1
+  - apiVersion: v2
+    appVersion: "9.4"
     created: "2025-06-05T19:32:45.483521437Z"
     description: A Helm chart for pgAdmin 4 - PostgreSQL administration and development
       platform
@@ -469,4 +480,4 @@ entries:
     urls:
     - https://github.com/chatwoot-br/charts/releases/download/typebot-1.0.0/typebot-1.0.0.tgz
     version: 1.0.0
-generated: "2025-06-05T19:32:45.483562875Z"
+generated: "2025-06-05T21:40:39.965327365Z"
