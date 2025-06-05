@@ -1,0 +1,59 @@
+# pgAdmin Ingress Configuration for Traefik behind Cloudflare
+# Use this file to deploy pgAdmin with proper ingress settings for Traefik when Cloudflare handles HTTPS
+# Example: helm upgrade pgadmin ./charts/pgadmin -f ./charts/pgadmin/values.ingress.yaml
+
+# Enable ingress
+ingress:
+  enabled: true
+  className: "traefik"
+  annotations:
+    # Headers middleware for pgAdmin behind Cloudflare + Traefik
+    traefik.ingress.kubernetes.io/router.middlewares: "default-pgadmin-headers@kubernetescrd"
+    
+    # Use web entrypoint (port 80) since Cloudflare handles HTTPS
+    traefik.ingress.kubernetes.io/router.entrypoints: "web"
+    
+  hosts:
+    - host: pgadmin.saas.chatwoot.app.br
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  # No TLS section needed - Cloudflare handles HTTPS termination
+
+# pgAdmin Configuration for Cloudflare + Traefik
+pgadmin:
+  # Update with your actual credentials
+  defaultEmail: "admin@chatwoot.app.br"
+  defaultPassword: "YourSecurePassword123!"
+  
+  # Disable TLS inside container since Cloudflare handles it
+  enableTLS: false
+  
+  # Gunicorn settings - fix timeout issue
+  gunicorn:
+    accessLogFile: "-"
+    limitRequestLine: 8190
+    threads: 25
+    timeout: 120
+  
+  # Configuration for reverse proxy setup
+  config:
+    # Important: Tell pgAdmin it's behind HTTPS reverse proxy (Cloudflare)
+    ENHANCED_COOKIE_PROTECTION: True
+    CONSOLE_LOG_LEVEL: 20  # INFO level
+    SESSION_EXPIRATION_TIME: 8  # Hours
+    
+    # Configure proxy settings for Cloudflare + Traefik
+    # Number of values to trust for X-Forwarded-For (Cloudflare sets this)
+    PROXY_X_FOR_COUNT: 1
+    # Number of values to trust for X-Forwarded-Proto (Cloudflare + Traefik set this)
+    PROXY_X_PROTO_COUNT: 1
+    # Number of values to trust for X-Forwarded-Host (Cloudflare + Traefik set this)
+    PROXY_X_HOST_COUNT: 1
+    # Number of values to trust for X-Forwarded-Port (Cloudflare sets this)
+    PROXY_X_PORT_COUNT: 1
+    
+    # Secure cookie settings for HTTPS (handled by Cloudflare)
+    SESSION_COOKIE_SECURE: True
+    SESSION_COOKIE_HTTPONLY: True
+    SESSION_COOKIE_SAMESITE: "'Lax'"

@@ -1,6 +1,13 @@
 # Example production values for pgAdmin
 # Copy this file and customize for your environment
 
+# Replica count for production
+replicaCount: 1
+
+# Deployment strategy for stateful application
+deploymentStrategy:
+  type: Recreate
+
 # pgAdmin Configuration
 pgadmin:
   # REQUIRED: Set your admin email and password
@@ -71,18 +78,26 @@ resources:
 # Security context
 podSecurityContext:
   fsGroup: 5050
-  runAsNonRoot: true
+  fsGroupChangePolicy: "OnRootMismatch"
+  # For production, you may want to enforce non-root, but test thoroughly
+  # runAsNonRoot: true
   seccompProfile:
     type: RuntimeDefault
 
 securityContext:
-  runAsNonRoot: true
-  runAsUser: 5050
-  runAsGroup: 5050
-  allowPrivilegeEscalation: false
+  # For production, allow initial privilege escalation for proper startup
+  # pgAdmin containers often need this for proper initialization
+  runAsNonRoot: false
+  allowPrivilegeEscalation: true
   capabilities:
     drop:
-    - ALL
+    - NET_RAW
+    - SYS_CHROOT
+    - MKNOD
+    - AUDIT_WRITE
+    - KILL
+    - SETUID
+    - SETGID
   readOnlyRootFilesystem: false
 
 # Health checks

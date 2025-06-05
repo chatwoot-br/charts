@@ -8,6 +8,10 @@ spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
+  {{- with .Values.deploymentStrategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "pgadmin.selectorLabels" . | nindent 6 }}
@@ -94,6 +98,10 @@ spec:
             {{- if .Values.pgadmin.gunicorn.threads }}
             - name: GUNICORN_THREADS
               value: {{ .Values.pgadmin.gunicorn.threads | quote }}
+            {{- end }}
+            {{- if .Values.pgadmin.gunicorn.timeout }}
+            - name: GUNICORN_TIMEOUT
+              value: {{ .Values.pgadmin.gunicorn.timeout | quote }}
             {{- end }}
             {{- range $key, $value := .Values.pgadmin.config }}
             - name: PGADMIN_CONFIG_{{ $key }}

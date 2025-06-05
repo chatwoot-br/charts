@@ -25,10 +25,22 @@ The command deploys pgAdmin on the Kubernetes cluster in the default configurati
 To uninstall/delete the `my-pgadmin` deployment:
 
 ```bash
-helm delete my-pgladmin
+helm delete my-pgadmin
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
+
+## Known Issues
+
+### pkg_resources Deprecation Warning
+
+You may see the following warning in the pgAdmin container logs:
+
+```
+/venv/lib/python3.12/site-packages/passlib/pwd.py:16: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html
+```
+
+This is a known warning from the passlib library used by pgAdmin and does not affect functionality. It will be resolved in future pgAdmin releases when the underlying libraries are updated.
 
 ## Parameters
 
@@ -46,9 +58,9 @@ The command removes all the Kubernetes components associated with the chart and 
 | `pgadmin.defaultEmail`                  | Default admin email (required)                        | `admin@example.com`    |
 | `pgadmin.defaultPassword`               | Default admin password (required)                     | `SuperSecret`          |
 | `pgadmin.enableTLS`                     | Enable TLS (container listens on port 443)           | `false`                |
-| `pgadmin.listenAddress`                 | Listen address                                        | `"::"`                 |
-| `pgadmin.listenPort`                    | Custom listen port                                    | `""`                   |
-| `pgadmin.disablePostfix`                | Disable Postfix mail server                           | `false`                |
+| `pgadmin.listenAddress`                 | Listen address (leave empty for defaults)             | `nil`                  |
+| `pgadmin.listenPort`                    | Custom listen port (leave empty for defaults)         | `nil`                  |
+| `pgadmin.disablePostfix`                | Disable Postfix mail server                           | `true`                 |
 | `pgadmin.serverJsonFile`                | Server configuration file path                        | `/pgadmin4/servers.json` |
 | `pgadmin.replaceServersOnStartup`       | Replace servers on startup                            | `false`                |
 | `pgadmin.preferencesJsonFile`           | Preferences configuration file path                   | `/pgadmin4/preferences.json` |

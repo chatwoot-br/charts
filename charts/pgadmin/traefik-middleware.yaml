@@ -1,0 +1,22 @@
+# Traefik Middleware for pgAdmin behind Cloudflare
+# Apply this middleware before deploying pgAdmin
+# kubectl apply -f traefik-middleware.yaml
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: pgadmin-headers
+  namespace: default  # Change to your namespace
+spec:
+  headers:
+    customRequestHeaders:
+      # Tell pgAdmin it's behind HTTPS (Cloudflare handles HTTPS)
+      X-Forwarded-Proto: "https"
+      X-Forwarded-Port: "443"
+      X-Scheme: "https"
+      X-Forwarded-Host: "pgadmin.saas.chatwoot.app.br"
+    customResponseHeaders:
+      X-Frame-Options: "SAMEORIGIN"
+      X-Content-Type-Options: "nosniff"
+      X-XSS-Protection: "1; mode=block"
+      Referrer-Policy: "strict-origin-when-cross-origin"

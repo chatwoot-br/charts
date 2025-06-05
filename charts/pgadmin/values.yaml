@@ -5,6 +5,11 @@
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
 replicaCount: 1
 
+# Deployment strategy - use Recreate for stateful applications like pgAdmin
+# This ensures the old pod is terminated before the new one starts
+deploymentStrategy:
+  type: Recreate
+
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
   repository: dpage/pgadmin4
@@ -28,11 +33,11 @@ pgadmin:
   # Enable TLS (if true, container will listen on port 443)
   enableTLS: false
   # Listen address
-  listenAddress: "::"
-  # Custom listen port (defaults to 80 or 443 if TLS enabled)
-  listenPort: ""
+  listenAddress: "0.0.0.0"
+  # Custom listen port (leave empty to use pgAdmin defaults: 80 for HTTP, 443 for HTTPS)
+  listenPort: 80
   # Disable Postfix mail server
-  disablePostfix: false
+  disablePostfix: true
   # Server configuration file
   serverJsonFile: "/pgadmin4/servers.json"
   # Replace servers on startup
@@ -49,6 +54,7 @@ pgadmin:
     accessLogFile: "-"
     limitRequestLine: 8190
     threads: 25
+    timeout: 120
 
 # Persistence configuration
 persistence:
@@ -84,16 +90,23 @@ podLabels: {}
 # Security context for the pod
 podSecurityContext:
   fsGroup: 5050
+  # Allow the container to change ownership of mounted volumes
+  fsGroupChangePolicy: "OnRootMismatch"
 
 # Security context for the container
+# Note: pgAdmin container needs flexibility during startup for proper initialization
 securityContext:
-  runAsNonRoot: true
-  runAsUser: 5050
-  runAsGroup: 5050
-  allowPrivilegeEscalation: false
+  # Allow running as root initially - pgAdmin will manage user context internally
+  runAsNonRoot: false
+  # Allow privilege escalation for proper container initialization
+  allowPrivilegeEscalation: true
   capabilities:
     drop:
-    - ALL
+    - NET_RAW
+    - SYS_CHROOT
+    - MKNOD
+    - AUDIT_WRITE
+    - KILL
   readOnlyRootFilesystem: false
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
@@ -112,6 +125,8 @@ ingress:
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
     # nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    # nginx.ingress.kubernetes.io/proxy-set-header-X-Script-Name: ""
+    # nginx.ingress.kubernetes.io/proxy-set-header-X-Scheme: "$scheme"
   hosts:
     - host: pgadmin.example.local
       paths:
