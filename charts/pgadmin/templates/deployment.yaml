@@ -1,0 +1,146 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "pgadmin.fullname" . }}
+  labels:
+    {{- include "pgadmin.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "pgadmin.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "pgadmin.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "pgadmin.serviceAccountName" . }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
+          env:
+            - name: PGADMIN_DEFAULT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "pgadmin.fullname" . }}
+                  key: PGADMIN_DEFAULT_EMAIL
+            - name: PGADMIN_DEFAULT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "pgadmin.fullname" . }}
+                  key: PGADMIN_DEFAULT_PASSWORD
+            {{- if .Values.pgadmin.enableTLS }}
+            - name: PGADMIN_ENABLE_TLS
+              value: "True"
+            {{- end }}
+            {{- if .Values.pgadmin.disablePostfix }}
+            - name: PGADMIN_DISABLE_POSTFIX
+              value: "True"
+            {{- end }}
+            {{- if .Values.pgadmin.listenAddress }}
+            - name: PGADMIN_LISTEN_ADDRESS
+              value: {{ .Values.pgadmin.listenAddress | quote }}
+            {{- end }}
+            {{- if .Values.pgadmin.listenPort }}
+            - name: PGADMIN_LISTEN_PORT
+              value: {{ .Values.pgadmin.listenPort | quote }}
+            {{- end }}
+            {{- if .Values.pgadmin.serverJsonFile }}
+            - name: PGADMIN_SERVER_JSON_FILE
+              value: {{ .Values.pgadmin.serverJsonFile | quote }}
+            {{- end }}
+            {{- if .Values.pgadmin.replaceServersOnStartup }}
+            - name: PGADMIN_REPLACE_SERVERS_ON_STARTUP
+              value: "True"
+            {{- end }}
+            {{- if .Values.pgadmin.preferencesJsonFile }}
+            - name: PGADMIN_PREFERENCES_JSON_FILE
+              value: {{ .Values.pgadmin.preferencesJsonFile | quote }}
+            {{- end }}
+            {{- if .Values.pgadmin.gunicorn.accessLogFile }}
+            - name: GUNICORN_ACCESS_LOGFILE
+              value: {{ .Values.pgadmin.gunicorn.accessLogFile | quote }}
+            {{- end }}
+            {{- if .Values.pgadmin.gunicorn.limitRequestLine }}
+            - name: GUNICORN_LIMIT_REQUEST_LINE
+              value: {{ .Values.pgadmin.gunicorn.limitRequestLine | quote }}
+            {{- end }}
+            {{- if .Values.pgadmin.gunicorn.threads }}
+            - name: GUNICORN_THREADS
+              value: {{ .Values.pgadmin.gunicorn.threads | quote }}
+            {{- end }}
+            {{- range $key, $value := .Values.pgadmin.config }}
+            - name: PGADMIN_CONFIG_{{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          {{- with .Values.livenessProbe }}
+          livenessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.readinessProbe }}
+          readinessProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.startupProbe }}
+          startupProbe:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            {{- if .Values.persistence.enabled }}
+            - name: pgadmin-data
+              mountPath: /var/lib/pgadmin
+            {{- end }}
+            {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+      volumes:
+        {{- if .Values.persistence.enabled }}
+        - name: pgadmin-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim | default (include "pgadmin.fullname" .) }}
+        {{- end }}
+        {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

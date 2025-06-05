@@ -1,0 +1,154 @@
+# Example production values for pgAdmin
+# Copy this file and customize for your environment
+
+# pgAdmin Configuration
+pgadmin:
+  # REQUIRED: Set your admin email and password
+  defaultEmail: "admin@yourdomain.com"
+  defaultPassword: "YourSecurePassword123!"
+  
+  # Enable TLS for production (requires proper certificate setup)
+  enableTLS: false
+  
+  # Disable Postfix if you don't need email functionality
+  disablePostfix: true
+  
+  # Optional: Custom configuration
+  config:
+    ENHANCED_COOKIE_PROTECTION: "True"
+    LOGIN_BANNER: "Authorized users only!"
+    CONSOLE_LOG_LEVEL: "20"  # INFO level
+    SESSION_EXPIRATION_TIME: "8"  # Hours
+
+# Image configuration
+image:
+  repository: dpage/pgadmin4
+  tag: "9.4"  # Use specific version in production
+  pullPolicy: IfNotPresent
+
+# Service configuration
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+# Ingress configuration for external access
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  hosts:
+    - host: pgadmin.yourdomain.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: pgadmin-tls
+      hosts:
+        - pgadmin.yourdomain.com
+
+# Persistence configuration
+persistence:
+  enabled: true
+  storageClass: "fast-ssd"  # Use your preferred storage class
+  accessMode: ReadWriteOnce
+  size: 10Gi
+  annotations:
+    "volume.beta.kubernetes.io/storage-class": "fast-ssd"
+
+# Resource limits for production
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+# Security context
+podSecurityContext:
+  fsGroup: 5050
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 5050
+  runAsGroup: 5050
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+
+# Health checks
+livenessProbe:
+  httpGet:
+    path: /misc/ping
+    port: http
+  initialDelaySeconds: 60
+  periodSeconds: 30
+  timeoutSeconds: 10
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /misc/ping
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+startupProbe:
+  httpGet:
+    path: /misc/ping
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 30
+
+# Autoscaling (optional)
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+
+# Node selection
+nodeSelector:
+  "kubernetes.io/os": linux
+
+# Pod scheduling
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 1
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app.kubernetes.io/name
+            operator: In
+            values:
+            - pgadmin
+        topologyKey: kubernetes.io/hostname
+
+tolerations: []
+
+# Additional volumes for server/preferences configuration
+volumes:
+- name: servers-config
+  configMap:
+    name: pgadmin-servers-config
+    optional: true
+
+volumeMounts:
+- name: servers-config
+  mountPath: "/pgadmin4/servers.json"
+  subPath: "servers.json"
+  readOnly: true
