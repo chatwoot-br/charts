@@ -186,6 +186,20 @@ ingress:
           pathType: ImplementationSpecific
 ```
 
+### Deploying behind Cloudflare and Traefik
+
+If pgAdmin is served through Cloudflare with Traefik as the ingress controller,
+use the provided `values.ingress.yaml` file. It sets all `PROXY_X_*_COUNT`
+options to `2` so pgAdmin trusts the forwarded headers from both proxies.
+Set `ingress.createMiddleware=true` to have the chart create a Traefik
+middleware named `<release>-pgadmin-headers` and automatically annotate the
+Ingress. If you deploy the middleware manually, ensure its name and namespace
+match the annotation (e.g. `default-pgadmin-headers@kubernetescrd`).
+If the reference does not match, Traefik cannot bind the router and requests to
+the ingress hostname will result in `404` errors. Also verify the router
+entrypoint (`traefik.ingress.kubernetes.io/router.entrypoints`) matches an
+existing Traefik entrypoint such as `web`.
+
 ### Security
 
 The chart configures security contexts to run pgAdmin as the pgadmin user (UID: 5050) for better security.
