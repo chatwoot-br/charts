@@ -11,6 +11,13 @@ helm repo add chatwoot https://chatwoot-br.github.io/charts
 helm install chatwoot chatwoot/chatwoot
 ```
 
+## Updating
+
+```bash
+helm dependency update
+helm dependency build
+```
+
 ## Configuration
 
 Check the [README.md](./charts/chatwoot/README.md)
