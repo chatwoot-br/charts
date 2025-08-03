@@ -399,6 +399,16 @@ entries:
     version: 2.0.0
   evolution:
   - apiVersion: v2
+    appVersion: v2.3.1
+    created: "2025-08-03T22:06:10.916747788Z"
+    description: A Helm chart for Kubernetes
+    digest: 702f1a5bc25644dbc86568dc334cb6acad1815ef7cf5d32bcb7c6da6f9eb61cf
+    name: evolution
+    type: application
+    urls:
+    - https://github.com/chatwoot-br/charts/releases/download/evolution-2.3.1/evolution-2.3.1.tgz
+    version: 2.3.1
+  - apiVersion: v2
     appVersion: v2.3.0
     created: "2025-05-29T15:37:34.968101142Z"
     description: A Helm chart for Kubernetes
@@ -552,4 +562,4 @@ entries:
     urls:
     - https://github.com/chatwoot-br/charts/releases/download/typebot-1.0.0/typebot-1.0.0.tgz
     version: 1.0.0
-generated: "2025-07-18T20:33:20.840578021Z"
+generated: "2025-08-03T22:06:10.916808023Z"
