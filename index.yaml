@@ -2,6 +2,42 @@ apiVersion: v1
 entries:
   chatwoot:
   - apiVersion: v2
+    appVersion: v4.5.2
+    created: "2025-09-01T10:13:14.074127702Z"
+    dependencies:
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.7.20
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 20.13.4
+    description: "Open-source customer engagement suite, an alternative to Intercom,
+      Zendesk, Salesforce Service Cloud etc. \U0001F525\U0001F4AC"
+    digest: 907ea3748ff9202c9410d726610d6d36d79361530764794481a4ab44336b7b93
+    home: https://github.com/chatwoot-br/charts
+    icon: https://chatwoot-public-assets.s3.amazonaws.com/logo/square.png
+    keywords:
+    - chatwoot
+    - open source
+    - customer support
+    - chat
+    - ruby
+    - rails
+    - crm
+    maintainers:
+    - email: antonio@chatwoot.app.br
+      name: milesibastos
+    name: chatwoot
+    sources:
+    - https://github.com/chatwoot-br/chatwoot
+    - https://chatwoot.app.br
+    type: application
+    urls:
+    - https://github.com/chatwoot-br/charts/releases/download/chatwoot-4.5.2/chatwoot-4.5.2.tgz
+    version: 4.5.2
+  - apiVersion: v2
     appVersion: v4.4.0
     created: "2025-07-18T20:33:20.840511757Z"
     dependencies:
@@ -399,6 +435,16 @@ entries:
     version: 2.0.0
   evolution:
   - apiVersion: v2
+    appVersion: v2.3.2
+    created: "2025-09-01T10:13:14.228424206Z"
+    description: A Helm chart for Kubernetes
+    digest: bf4903d5d29553b93c8abdb264b133903cc38cd5b80d4f7495cc22ef59cbab1f
+    name: evolution
+    type: application
+    urls:
+    - https://github.com/chatwoot-br/charts/releases/download/evolution-2.3.2/evolution-2.3.2.tgz
+    version: 2.3.2
+  - apiVersion: v2
     appVersion: v2.3.1
     created: "2025-08-03T22:06:10.916747788Z"
     description: A Helm chart for Kubernetes
@@ -562,4 +608,4 @@ entries:
     urls:
     - https://github.com/chatwoot-br/charts/releases/download/typebot-1.0.0/typebot-1.0.0.tgz
     version: 1.0.0
-generated: "2025-08-03T22:06:10.916808023Z"
+generated: "2025-09-01T10:13:14.228536427Z"
