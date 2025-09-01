@@ -83,7 +83,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Chart.Name }}-web
           ports:
-            - containerPort: {{ int .Values.services.internalPort }}
+            - name: http
+              containerPort: {{ int .Values.services.internalPort }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- with .Values.web.resources }}
           resources:
@@ -95,6 +96,10 @@ spec:
           {{- with .Values.extraVolumeMounts }}
           {{- toYaml . | nindent 12 }}
           {{- end }}
+          livenessProbe:
+            {{- toYaml .Values.web.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.web.readinessProbe | nindent 12 }}
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
       {{- if .Values.securityContext }}
       securityContext: {{ .Values.securityContext | toYaml | nindent 8 }}
