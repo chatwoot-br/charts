@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/chatwoot-br/evolution-api
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: v2.3.1
+  tag: v2.3.2
 
 imagePullSecrets: []
 nameOverride: ""
@@ -245,14 +245,29 @@ ingress:
 
 resources: {}
 
+# Liveness Probe - verifica se a aplicação está rodando
 livenessProbe:
   httpGet:
-    path: /
-    port: http
+    path: /health/liveness
+    port: 8080
+    scheme: HTTP
+  initialDelaySeconds: 30 # Aguarda 30s após startup
+  periodSeconds: 30 # Verifica a cada 30s
+  timeoutSeconds: 5 # Timeout de 5s por verificação
+  failureThreshold: 3 # 3 falhas consecutivas reinicia o pod
+  successThreshold: 1 # Uma verificação bem-sucedida é suficiente
+
+# Readiness Probe - verifica se a aplicação está pronta para receber tráfego
 readinessProbe:
   httpGet:
-    path: /
-    port: http
+    path: /health/readiness
+    port: 8080
+    scheme: HTTP
+  initialDelaySeconds: 5 # Aguarda 5s após startup
+  periodSeconds: 10 # Verifica a cada 10s
+  timeoutSeconds: 3 # Timeout de 3s por verificação
+  failureThreshold: 3 # 3 falhas consecutivas remove do serviço
+  successThreshold: 1 # Uma verificação bem-sucedida é suficiente
 
 autoscaling:
   enabled: false
@@ -282,17 +297,17 @@ affinity: {}
 
 # values.yaml
 restartCronJob:
-  enabled: true            # vira false se não quiser instalar
-  schedule: "0 5 * * *"    # 05:00 todo dia
+  enabled: true # vira false se não quiser instalar
+  schedule: "0 5 * * *" # 05:00 todo dia
   timezone: "America/Sao_Paulo"
   # imagem leve que já traz kubectl
   image:
     repository: bitnami/kubectl
-    tag: 1.31             # mantenha alinhado ao seu cluster
+    tag: 1.31 # mantenha alinhado ao seu cluster
     pullPolicy: IfNotPresent
-  targetKind: Deployment   # ou StatefulSet/DaemonSet/Pod
+  targetKind: Deployment # ou StatefulSet/DaemonSet/Pod
   targetName: ""
   # RBAC
   serviceAccount:
     create: true
-    name: ""               # vazio → usa {{ include "evolution.fullname" . }}-restart
+    name: "" # vazio → usa {{ include "evolution.fullname" . }}-restart
